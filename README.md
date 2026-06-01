@@ -1,54 +1,59 @@
-SALARY s.r.o. - Rozhraní pro české zdravotní pojišťovny (XSD/XML)
+# SALARY s.r.o. - Rozhraní pro české zdravotní pojišťovny (XSD/XML)
 
-Hlavní repozitář obsahující oficiální schémata XSD a šablony XML pro regulační reporting pro české zdravotní pojišťovny (Zdravotní pojišťovny ČR). Vyvinuto a spravováno společností SALARY s.r.o. jako nedílná součást naší platformy pro validaci základního softwaru pro mzdy.
-📌 Přehled projektu
+<!-- ISO 9001:2015 Referenční číslo dokumentu: REF-IT-XSD-01 | Verze: 1.0.0 | Stav: SCHVÁLENO -->
 
-Toto repozitář slouží jako jediný zdroj pravdy (SSOT) pro formáty validace dat vyžadované firemním zpracováním mezd. Zajišťuje přísné dodržování českých zákonných požadavků a standardů managementu kvality ISO 9001:2015 (konkrétně článku 8.1 - Provozní plánování a řízení).
-Rozhraní pro spravované dokumenty:
+Hlavní repozitář obsahující oficiální XSD schémata a XML šablony pro zákonný reporting zdravotním pojišťovnám ČR. Vyvíjeno a udržováno společností **SALARY s.r.o.** jako nedílná součást naší validační platformy pro mzdový core software.
 
-HOZ (Hromadné oznámení zaměstnanců) - Registrace zaměstnanců, změny zdravotních pojišťoven a úpravy kategorií (Zákonný limit: 8 dní).
-PPPZ (Přehled o platbě pojistného zaměstnavatele) - Měsíční úhrn pojistného, ​​výpočtové základy a výkazy zaměstnavatele (zákonný limit: 20. den následujícího měsíce).
+## 📌 Přehled projektu
 
-🗂 Struktura úložiště
+Tento repozitář slouží jako jediný zdroj pravdy (SSOT) pro formáty validace dat vyžadované při podnikovém zpracování mezd. Zajišťuje přísný soulad s legislativními požadavky ČR a **Standardy řízení kvality ISO 9001:2015** (konkrétně článek 8.1 – Plánování a řízení provozu).
 
-├── .github/ # kanály CI/CD pro automatizovanou validaci XML
-├── schémata/ # Oficiální soubory XSD
-│ ├── hoz/
-│ │ └── hoz_v2026.xsd # Schéma Hromadného oznámení zaměstnavatele
-│ └── pppz/
-│ └── pppz_v2026.xsd # Schéma pro Přehled o platbě pojistného
-├── šablony/ # Vzorky užitečného zatížení XML připravené na výrobu
-│ ├── hoz_sample.xml
-│ └── pppz_sample.xml
-└── README.md # Tato dokumentace
+### Spravovaná dokumentová rozhraní:
+*   **HOZ** (Hromadné oznámení zaměstnavatele) – Registrace zaměstnanců, změny zdravotních pojišťoven a změny kategorií (Zákonná lhůta: 8 dnů).
+*   **PPPZ** (Přehled o platbě pojistného zaměstnavatele) – Měsíční přehled o platbě pojistného, vyměřovací základy a prohlášení zaměstnavatele (Zákonná lhůta: do 20. dne následujícího měsíce).
 
-⚖️ Právní a regulační rámec
+## 🗂 Struktura repozitáře
 
-Všechna schémata v tomto repozitáři splňují platné právní předpisy České republiky:
+```text
+├── .github/              # CI/CD pipelines pro automatizovanou validaci XML
+├── schemas/              # Oficiální XSD soubory
+│   ├── hoz/
+│   │   └── hoz_v2026.xsd # Schéma pro Hromadné oznámení zaměstnavatele
+│   └── pppz/
+│       └── pppz_v2026.xsd # Schéma pro Přehled o platbě pojistného
+├── templates/            # Ukázky produkčních XML dat (mock data)
+│   ├── hoz_sample.xml
+│   └── pppz_sample.xml
+└── README.md             # Tato dokumentace
+```
 
-Zákon č. 48/1997 Sb. o veřejném zdravotním pojištění
-Zákon č. 592/1992 Sb. o pojistném na veřejné zdravotní pojištění
-Zákon č. 300/2008 Sb. o elektronických úkonech a autorizované konverzi dokumentů (protokol pro doručení datových schránek)
+## ⚖️ Právní a regulační rámec
 
-🛠 Integrace a validace CI/CD
+Všechna schémata v tomto repozitáři jsou v souladu s platnou legislativou České republiky:
+*   **Zákon č. 48/1997 Sb.** o veřejném zdravotním pojištění
+*   **Zákon č. 592/1992 Sb.** o pojistném na veřejné zdravotní pojištění
+*   **Zákon č. 300/2008 Sb.** o elektronických úkonech a autorizované konverzi dokumentů (přenosový protokol datových schránek)
 
-Každý commit do hlavní větve spustí automatizovaný pracovní postup, který provede kontroly shody schématu.
-Rychlé ruční ověření (CLI)
+## 🛠 Integrace a CI/CD validace
 
-Chcete-li lokálně ověřit export XML oproti našemu produkčnímu XSD, spusťte:
+Každý commit do větve `main` spouští automatizované workflow, které ověřuje kompatibilitu a správnost schémat.
 
+### Rychlá manuální validace (CLI)
+Pro lokální validaci exportovaného XML souboru vůči našemu produkčnímu XSD schématu spusťte:
+```bash
 xmllint --schema schemas/hoz/hoz_v2026.xsd templates/hoz_sample.xml --noout
+```
 
-🔒 Zabezpečení a ochrana osobních údajů (GDPR)
+## 🔒 Bezpečnost a ochrana osobních údajů (GDPR)
+*   **Politika nulového výskytu PII:** V tomto repozitáři je přísně zakázáno uvádět reálné osobní identifikační údaje (PII).
+*   Všechny datové soubory v adresáři `templates/` používají náhodně generované testovací proměnné.
+*   Přístupové tokeny a certifikáty elektronických podpisů musí být konfigurovány výhradně přes tajná prostředí (`GH_SECRETS`) a nikdy nesmí být pevně zapsány v kódu.
 
-Zásady nulových PII: Toto repozitář přísně zakazuje zahrnutí skutečných osobních identifikovatelných údajů (PII).
-Všechny datové soubory v šablonách/ používají náhodně generované falešné proměnné.
-Přístupové tokeny a certifikáty elektronického podpisu musí být konfigurovány pomocí tajných klíčů prostředí (GH_SECRETS) a nikdy nemusejí být pevně kódovány.
+## 👥 Autoři a řízení změn
 
-👥 Autoři a správa změn
+*   **Správce:** Vývojový tým SALARY s.r.o. (<dev@salary.cz>)
+*   **Vlastník procesu:** Manažer pro compliance a řízení kvality (QA)
+*   **ISO 9001 Auditní stopa:** Jakákoliv změna definic `.xsd` vyžaduje formální zápis do protokolu o změnovém řízení (Change Request).
 
-Správce: Vývojový tým SALARY s.r.o. (dev@salary.cz)
-Vlastník procesu: Manažer pro dodržování předpisů a zajištění kvality
-Auditní záznam ISO 9001: Jakákoli změna definic .xsd vyžaduje formální protokol žádosti o změnu (CR).
-
+---
 © 2026 SALARY s.r.o. Všechna práva vyhrazena. Interní technická dokumentace.
